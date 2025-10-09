@@ -6,8 +6,11 @@ use App\Http\Controllers\Customers\Pages\CustomersOrderController;
 use App\Http\Controllers\Common\Checkouts\CheckoutsController;
 
 // ========================= Landing Page ===========================
-Route::get('/customer', [CustomersHomeController::class, 'index'])->name('home');
+Route::get('/customer', [CustomersHomeController::class, 'index'])->name('home.customer');
 Route::get('/customer/event/{id}/detail', [CustomersHomeController::class, 'eventShow'])->name('events.show');
+
+Route::get('/event', [CustomersHomeController::class, 'index'])->name('home');
+Route::get('/event/{slug}', [CustomersHomeController::class, 'eventShow'])->name('events.show.slug');
 
 // ========================= Checkout ===========================
 Route::middleware(['auth', 'role:customer,admin,superadmin'])

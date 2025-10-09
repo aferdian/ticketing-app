@@ -33,7 +33,7 @@ class CustomersHomeController extends Controller
         return view('layouts.customers.index', compact('users', 'events'));
     }
 
-    public function eventShow($id)
+    public function eventShow($slugOrId)
     {
         $event = Event::with([
             'products' => function ($query) {
@@ -43,7 +43,10 @@ class CustomersHomeController extends Controller
         ])
             ->where('end_date', '>', now())
             ->where('status', '!=', 'draft')
-            ->where('id', $id)
+            ->where(function ($query) use ($slugOrId) {
+                $query->where('slug', $slugOrId)
+                    ->orWhere('id', $slugOrId);
+            })
             ->firstOrFail();
 
         return view('pages.Customers.eventShow.index', [

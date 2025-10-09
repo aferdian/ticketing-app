@@ -2,17 +2,21 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Event extends Model
 {
+    use Sluggable;
+
     protected $fillable = [
         'event_code',
         'user_id',
         'organization_id',
         'categories_id',
         'title',
+        'slug',
         'description',
         'start_date',
         'end_date',
@@ -34,6 +38,15 @@ class Event extends Model
         'start_date' => 'datetime',
         'end_date' => 'datetime',
     ];
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
 
     public function user(): BelongsTo
     {
