@@ -49,6 +49,10 @@ class CustomersHomeController extends Controller
             })
             ->firstOrFail();
 
+        if ($slugOrId != $event->slug) {
+            return redirect()->route('events.show.slug', $event->slug, 301);
+        }
+
         return view('pages.Customers.eventShow.index', [
             'event' => $event,
             'products' => $event->products,
