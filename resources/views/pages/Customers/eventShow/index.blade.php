@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', $event->title)
+
 @section('content')
     <section class="event-show-page overflow-hidden dark:bg-gray-800 transition-colors duration-300">
         <!-- Hero Section with Parallax Effect -->
