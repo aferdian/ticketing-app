@@ -61,7 +61,8 @@ class AdminHomeController extends SuperAdminBaseController
 
         // filter role: kalau bukan superadmin, hanya event miliknya
         $query->when($user->role !== 'superadmin', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
+            //$q->where('user_id', $user->id);
+            $q->where('organization_id', $user->organization_id);
         });
 
         // eksekusi query
