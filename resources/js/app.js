@@ -132,6 +132,51 @@ function handleOrganizationUpdateModal(orgId, action) {
     }
 }
 
+// ================== Copy To Clipboard ==================
+function copyToClipboard(text) {
+    console.log('copying to clipboard...', text);
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          console.log("Text successfully copied to clipboard (Clipboard API).");
+        })
+        .catch(err => {
+          console.error("Could not copy text using Clipboard API: ", err);
+          fallbackCopyTextToClipboard(text);
+        });
+    } else {
+      console.warn("Clipboard API not available. Using fallback method.");
+      fallbackCopyTextToClipboard(text);
+    }
+}
+
+function fallbackCopyTextToClipboard(text) {
+    let textArea = document.createElement("textarea");
+    textArea.value = text;
+
+    textArea.style.position = "fixed";
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.opacity = "0";
+
+    document.body.appendChild(textArea);
+
+    textArea.focus();
+    textArea.select();
+
+    try {
+      const successful = document.execCommand('copy');
+      const msg = successful ? 'successful' : 'unsuccessful';
+      console.log(`Fallback: Copying text command was ${msg}.`);
+    } catch (err) {
+      console.error('Fallback: Oops, unable to copy', err);
+    }
+
+    document.body.removeChild(textArea);
+}
+
+window.copyToClipboard = copyToClipboard;
+
 // ================== DOMContentLoaded START ==================
 document.addEventListener("DOMContentLoaded", () => {
     // ================== PAYMENT PROOF UPLOAD ==================
