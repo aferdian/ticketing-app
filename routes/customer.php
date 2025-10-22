@@ -6,7 +6,7 @@ use App\Http\Controllers\Customers\Pages\CustomersOrderController;
 use App\Http\Controllers\Common\Checkouts\CheckoutsController;
 
 // ========================= Landing Page ===========================
-Route::get('/customer', [CustomersHomeController::class, 'index'])->name('home.customer');
+Route::redirect('/customer', '/event', 301)->name('home.customer');
 Route::get('/customer/event/{id}/detail', [CustomersHomeController::class, 'eventShow'])->name('events.show');
 
 Route::get('/event', [CustomersHomeController::class, 'index'])->name('home');
