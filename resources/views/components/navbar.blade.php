@@ -146,7 +146,9 @@
                 <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ Auth::user()->name }}</p>
                     <p class="text-xs text-gray-500 truncate dark:text-gray-400">{{ Auth::user()->email }}</p>
+                    @if ( Auth::user()->organization )
                     <p class="text-xs text-gray-500 truncate dark:text-gray-400">{{ Auth::user()->organization->name }}</p>
+                    @endif
                 </div>
 
                 @if (in_array(Auth::user()->role, ['customer', 'admin', 'superadmin']))
