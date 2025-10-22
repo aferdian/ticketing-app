@@ -31,8 +31,17 @@
                                     class="fas fa-calendar-alt text-primary-300 group-hover:text-primary-200 transition-colors duration-300"></i>
                             </div>
                             <span class="font-medium tracking-wide">
-                                {{ $event->start_date->format('M d, Y') }} @if ($event->end_date)
-                                    - {{ $event->end_date->format('M d, Y') }}
+                                @if ($event->start_date->toDateString() === $event->end_date?->toDateString())
+                                    {{ $event->start_date->format('d M Y') }},
+                                    {{ $event->start_date->format('H:i') }}
+                                    @if ($event->end_date && $event->start_date->notEqualTo($event->end_date))
+                                        - {{ $event->end_date->format('H:i') }}
+                                    @endif
+                                @else
+                                    {{ $event->start_date->format('d M Y, H:i') }}
+                                    @if ($event->end_date)
+                                        - {{ $event->end_date->format('d M Y, H:i') }}
+                                    @endif
                                 @endif
                             </span>
                         </div>
@@ -78,11 +87,19 @@
 
                     <!-- CTA Buttons -->
                     <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                        @if ( $event->status === 'ended')
+                        <a href="#event-content"
+                            class="px-8 py-3 bg-red-500 text-red-100 font-semibold rounded-lg border border-red-400/40 transition-all duration-300 transform hover:scale-105 flex items-center justify-center cursor-pointer">
+                            <i class="fas fa-triangle-exclamation mr-2"></i>
+                            Event Has Ended
+                        </a>
+                        @else
                         <a href="#tickets"
                             class="px-8 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold rounded-lg border border-white/20 transition-all duration-300 transform hover:scale-105 flex items-center justify-center cursor-pointer">
                             <i class="fas fa-ticket-alt mr-2"></i>
                             Get Tickets
                         </a>
+
                         <a href="#event-content"
                             class="px-8 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold rounded-lg border border-white/20 transition-all duration-300 transform hover:scale-105 flex items-center justify-center cursor-pointer">
                             <i class="fas fa-info-circle mr-2"></i>
@@ -100,6 +117,7 @@
                             class="px-8 py-3 bg-transparent hover:bg-red-500/10 text-red-300 hover:text-red-400 font-semibold rounded-lg border border-red-400/40 transition-all duration-300 transform hover:scale-105 flex items-center justify-center cursor-pointer">
                             <i class="fas fa-flag mr-2"></i> Laporkan Event
                         </button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -118,6 +136,13 @@
                     <p class="text-xl leading-relaxed text-gray-700 dark:text-gray-300">
                         {{ $event->description ?? 'Event description will appear here...' }}
                     </p>
+                    @if ( $event->status === 'ended')
+                    <p class="mt-6"><span
+                        class="px-8 py-3 bg-red-500 text-red-100 font-semibold rounded-lg border border-red-400/40 transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center cursor-pointer">
+                        <i class="fas fa-triangle-exclamation mr-2"></i>
+                        Event Has Ended
+                    </span></p>
+                    @endif
                 </div>
 
                 <!-- Additional Event Details -->
@@ -136,6 +161,7 @@
             </div>
         </div>
 
+        @if ( $event->status !== 'ended')
         <!-- Tickets & Products Section -->
         <div id="tickets"
             class="relative bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 py-24 overflow-hidden transition-colors duration-300">
@@ -394,6 +420,7 @@
             </div>
         </div>
         </div>
+        @endif
 
         <!-- Map Section -->
         <div class="relative bg-gray-50 dark:bg-gray-800 py-16 md:py-24 overflow-hidden transition-colors duration-300">

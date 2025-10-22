@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customers\Pages;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -41,7 +42,7 @@ class CustomersHomeController extends Controller
                     ->where('sale_end_date', '>=', now());
             },
         ])
-            ->where('end_date', '>', now())
+            //->where('end_date', '>', now())
             ->where('status', '!=', 'draft')
             ->where(function ($query) use ($slugOrId) {
                 $query->where('slug', $slugOrId)
@@ -51,6 +52,12 @@ class CustomersHomeController extends Controller
 
         if ($slugOrId != $event->slug) {
             return redirect()->route('events.show.slug', $event->slug, 301);
+        }
+
+        // Check if the event has ended and update its status if needed
+        if ($event->status !== 'ended' && Carbon::parse($event->end_date)->isPast()) {
+            $event->status = 'ended';
+            $event->save();
         }
 
         return view('pages.Customers.eventShow.index', [
