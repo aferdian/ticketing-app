@@ -425,10 +425,10 @@
                                             {{ $event->city }}, {{ $event->state }}
                                         </address>
                                     </div>
-                                    <a href="{{ $event->custom_maps_url }}" target="_blank"
+                                    <!-- <a href="{{ $event->custom_maps_url }}" target="_blank"
                                         class="mt-4 md:mt-0 inline-flex items-center px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105">
                                         <i class="fas fa-directions mr-2"></i> Open in Maps
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                         @else
