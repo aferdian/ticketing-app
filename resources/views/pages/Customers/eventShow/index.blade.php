@@ -491,6 +491,7 @@
 
     @include('modals.reports.Customers.createReports')
 
+    @if ( $event->status !== 'ended')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // ===============================
@@ -602,4 +603,5 @@
             updateOrderSummary();
         });
     </script>
+    @endif
 @endsection
