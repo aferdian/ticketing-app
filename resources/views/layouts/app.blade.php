@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        {{ env('APP_NAME') }} |
-        {{ ucwords(str_replace(['.', '_'], ' ', request()->route()->getName())) }}
+        @yield( 'title', ucwords(str_replace(['.', '_'], ' ', request()->route()->getName())) )
+        | {{ env('APP_NAME') }}
     </title>
     <meta name="description" content="Modern admin dashboard template built with Tailwind CSS">
     <!-- Fonts -->

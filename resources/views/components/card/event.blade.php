@@ -98,7 +98,7 @@
 
                         <!-- Share Button (lebih ringan, elegan) -->
                         <button type="button"
-                            onclick="navigator.share ? navigator.share({ title: '{{ $event->title }}', url: '{{ route('events.show', $event->id) }}' }) : copyToClipboard('{{ route('events.show', $event->id) }}')"
+                            onclick="navigator.share ? navigator.share({ title: '{{ $event->title }}', url: '{{ route('events.show.slug', $event->slug) }}' }) : copyToClipboard('{{ route('events.show.slug', $event->slug) }}')"
                             class="px-3 py-2 rounded-lg text-sm font-medium border border-indigo-200 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 transition flex items-center gap-1 cursor-pointer">
                             <i class="ri-share-forward-line"></i>
                             Share

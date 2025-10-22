@@ -384,7 +384,7 @@
                         <div class="mt-4 flex flex-col sm:flex-row gap-3">
                             <!-- Share Event Button -->
                             <button type="button"
-                                onclick="navigator.share ? navigator.share({ title: '{{ $events->title }}', url: '{{ route('events.show', $events->id) }}' }) : copyToClipboard('{{ route('events.show', $events->id) }}')"
+                                onclick="navigator.share ? navigator.share({ title: '{{ $events->title }}', url: '{{ route('events.show.slug', $events->slug) }}' }) : copyToClipboard('{{ route('events.show.slug', $events->slug) }}')"
                                 class="w-full sm:w-auto flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 px-4 rounded-lg sm:rounded-xl transition-all duration-300 font-medium flex items-center justify-center gap-2 shadown cursor-pointer">
                                 <i class="ri-share-forward-line text-lg"></i>
                                 <span>Share Event</span>

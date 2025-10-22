@@ -191,7 +191,7 @@
 
                                             <div class="mt-4 flex flex-col sm:flex-row gap-3">
                                                 <!-- View Event Button -->
-                                                <a href="{{ route('events.show', $event->id) }}"
+                                                <a href="{{ route('events.show.slug', $event->slug) }}"
                                                     class="flex-1 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white py-3 px-6 rounded-xl hover:from-indigo-600 hover:to-indigo-700 transition-all duration-300 font-medium flex items-center justify-center group relative overflow-hidden">
                                                     <span
                                                         class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
@@ -206,7 +206,7 @@
 
                                                 <!-- Share Event Button -->
                                                 <button type="button"
-                                                    onclick="navigator.share ? navigator.share({ title: '{{ $event->title }}', url: '{{ route('events.show', $event->id) }}' }) : copyToClipboard('{{ route('events.show', $event->id) }}')"
+                                                    onclick="navigator.share ? navigator.share({ title: '{{ $event->title }}', url: '{{ route('events.show.slug', $event->slug) }}' }) : copyToClipboard('{{ route('events.show.slug', $event->slug) }}')"
                                                     class="sm:w-auto flex-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 py-3 px-6 rounded-xl hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-300 font-medium flex items-center justify-center gap-2 shadow-sm cursor-pointer">
                                                     <i class="fas fa-share-alt"></i>
                                                     <span>Share Event</span>
