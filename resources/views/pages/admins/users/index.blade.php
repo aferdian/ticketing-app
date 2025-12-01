@@ -6,7 +6,7 @@
                     Users
                 </h1>
                 <p class="text-gray-600 dark:text-gray-400 max-w-2xl">
-                    Manage all users
+                    Manage organization users
                 </p>
             </div>
         </div>
