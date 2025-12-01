@@ -1,3 +1,7 @@
+@section('title')
+    {{ $events->title }} - Attendees
+@endsection
+
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 p-3 sm:p-4 md:p-6 transition-colors duration-500">
     <!-- Header -->
     <div

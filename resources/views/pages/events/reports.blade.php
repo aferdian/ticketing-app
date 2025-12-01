@@ -1,3 +1,7 @@
+@section('title')
+    {{ $events->title }} - Report
+@endsection
+
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 p-3 sm:p-4 md:p-6">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <!-- Header -->
@@ -15,7 +19,7 @@
                         </h1>
                         <p class="text-indigo-600/80 dark:text-indigo-400 text-base sm:text-lg mt-1 sm:mt-2">
                             Semua laporan pelanggan untuk event
-                            <span class="font-semibold">{{ $event->title ?? 'Unknown Event' }}</span>
+                            <span class="font-semibold">{{ $events->title ?? 'Unknown Event' }}</span>
                         </p>
                     </div>
                 </div>

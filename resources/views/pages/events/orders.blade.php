@@ -1,3 +1,7 @@
+@section('title')
+    {{ $events->title }} - Orders
+@endsection
+
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 p-3 sm:p-4 md:p-6">
     <div class="grid grid-cols-1 gap-4 sm:gap-6 md:gap-8">
         <!-- Header -->

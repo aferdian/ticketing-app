@@ -1,3 +1,7 @@
+@section('title')
+    {{ $events->title }} - Check In
+@endsection
+
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 p-3 sm:p-4 md:p-6 text-gray-900 dark:text-gray-100">
     <!-- Header -->
     <div
