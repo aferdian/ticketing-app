@@ -170,6 +170,10 @@
                         class="flex items-center gap-2 px-4 py-2 text-gray-900 dark:text-gray-100 hover:bg-gray-600 dark:hover:bg-gray-500/30 transition">
                         <i class="ri-calendar-event-line"></i> My Events
                     </a>
+                    <a href="{{ route('admin.users.index') }}"
+                        class="flex items-center gap-2 px-4 py-2 text-gray-900 dark:text-gray-100 hover:bg-gray-600 dark:hover:bg-gray-500/30 transition">
+                        <i class="ri-group-line"></i> Users
+                    </a>
                 </div>
                 @endif
 

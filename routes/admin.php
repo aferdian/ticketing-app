@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Pages\Events\AdminAttendeesController;
 use App\Http\Controllers\Admin\Pages\Events\AdminOrdersController;
 use App\Http\Controllers\Admin\Pages\Events\AdminProductsController;
 use App\Http\Controllers\Admin\Pages\Events\AdminPromoController;
+use App\Http\Controllers\Admin\Users\AdminUserController;
 
 // ========================= ADMIN ===========================
 Route::middleware(['auth', 'role:superadmin,admin'])
@@ -17,10 +18,15 @@ Route::middleware(['auth', 'role:superadmin,admin'])
     ->name('admin.')
     ->group(function () {
         Route::get('/', [AdminHomeController::class, 'index'])->name('index');
-        Route::get('/{status}', [AdminHomeController::class, 'index'])->name('events.status');
+
+        // ----------------------------------------- User -----------------------------------------
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::get('/', [AdminUserController::class, 'index'])->name('index');
+        });
 
         // ----------------------------------------- Event -----------------------------------------
         Route::prefix('events')->name('events.')->group(function () {
+            Route::get('/{status}', [AdminHomeController::class, 'index'])->name('status');
             Route::prefix('{id}')->group(function () {
                 Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
                 Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings');
