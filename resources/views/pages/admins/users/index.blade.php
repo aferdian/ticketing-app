@@ -1,3 +1,5 @@
+@section('title', 'Organization Users')
+
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 sm:p-6 lg:p-8">
     <div class="max-w-7xl mx-auto space-y-6"> <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 sm:mb-12 gap-4">
