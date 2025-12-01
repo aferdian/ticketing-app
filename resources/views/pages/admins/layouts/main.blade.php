@@ -39,6 +39,10 @@
         @include('pages.events.reports-show')
     @break
 
+    @case('users')
+        @include('pages.admins.users.index')
+    @break
+
     @default
         @include('pages.events.dashboard')
 @endswitch

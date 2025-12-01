@@ -26,7 +26,10 @@ Route::middleware(['auth', 'role:superadmin,admin'])
 
         // ----------------------------------------- Event -----------------------------------------
         Route::prefix('events')->name('events.')->group(function () {
-            Route::get('/{status}', [AdminHomeController::class, 'index'])->name('status');
+            Route::get('{status}', [AdminHomeController::class, 'index'])
+                ->name('status')
+                ->where('status', 'draft|ongoing|upcoming|ended');
+            
             Route::prefix('{id}')->group(function () {
                 Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
                 Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings');
@@ -38,6 +41,6 @@ Route::middleware(['auth', 'role:superadmin,admin'])
                 Route::get('/promo', [AdminPromoController::class, 'index'])->name('promos');
                 Route::get('/reports', [AdminReportController::class, 'index'])->name('reports');
                 Route::get('/reports/{reportId}', [AdminReportController::class, 'show'])->name('reports.show');
-            });
+            })->where('id', '[0-9]+');
         });
     });
