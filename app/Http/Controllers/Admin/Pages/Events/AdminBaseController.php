@@ -13,6 +13,7 @@ class AdminBaseController extends Controller
 protected function getEventsViewData(string $eventsContent, int $id)
     {
         return [
+            'activeContent' => 'events-content',
             'eventsContent' => $eventsContent,
             'eventId'       => $id,
             'user'          => Auth::user(),
