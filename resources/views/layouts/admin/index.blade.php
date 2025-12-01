@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'My Events')
+
 @section('content')
 <div class="min-h-screen p-6">
     <!-- Animated Stats Cards -->

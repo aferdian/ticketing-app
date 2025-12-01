@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Order Detail')
+
 @section('content')
     <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         <div class="bg-gray-900 dark:bg-gray-900 rounded-xl shadow-sm border border-gray-700 overflow-hidden">
