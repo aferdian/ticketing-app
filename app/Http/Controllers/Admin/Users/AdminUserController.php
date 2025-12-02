@@ -13,9 +13,13 @@ class AdminUserController extends SuperAdminBaseController
         $user = Auth::user();
         
         $viewData = $this->getViewData('users');
-        $users = User::with(['organization'])
-            ->where('organization_id', $user->organization_id)
-            ->orderBy('created_at', 'desc')->paginate(10);
+        $organizationIds = $user->organizations->pluck('id');
+        $users = User::whereHas('organizations', function ($query) use ($organizationIds) {
+            $query->whereIn('organization_id', $organizationIds);
+        })
+        ->with('organizations')
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
 
         return view('layouts.admin.users', array_merge($viewData, [
             'users'=> $users,

@@ -17,8 +17,13 @@ class Organization extends Model
         return $this->hasMany(Event::class);
     }
 
-    public function user()
+    /*public function user()
     {
         return $this->hasOne(User::class);
+    }*/
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_organization');
     }
 }
