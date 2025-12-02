@@ -59,9 +59,10 @@ class AdminHomeController extends SuperAdminBaseController
             });
         }
 
-        // filter role: kalau bukan superadmin, hanya event miliknya
+        // filter role: kalau bukan superadmin, hanya event miliknya/organisasi
         $query->when($user->role !== 'superadmin', function ($q) use ($user) {
             //$q->where('user_id', $user->id);
+            // filter event milik organisasi
             $q->where('organization_id', $user->organization_id);
         });
 
