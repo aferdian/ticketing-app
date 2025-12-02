@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth' => \App\Http\Middleware\CustomAuthMiddleware::class,
             'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'organization.check' => \App\Http\Middleware\CheckForSelectedOrganization::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

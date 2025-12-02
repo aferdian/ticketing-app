@@ -6,29 +6,31 @@ use App\Http\Controllers\Auth\AuthController;
 
 // ========================= AUTHORIZE ===========================
 
-Route::get('/', function () {
-    $user = Auth::user();
+Route::middleware(['auth', 'organization.check'])->group(function () {
+    Route::get('/', function () {
+        $user = Auth::user();
 
-    if (!$user) {
-        return redirect()->route('home');
-    }
+        if (!$user) {
+            return redirect()->route('home');
+        }
 
-    // Superadmin
-    if ($user->role === 'superadmin') {
-        return redirect()->route('superAdmin.dashboard');
-    }
+        // Superadmin
+        if ($user->role === 'superadmin') {
+            return redirect()->route('superAdmin.dashboard');
+        }
 
-    // Admin
-    if ($user->role === 'admin') {
-        return redirect()->route('admin.index');
-    }
+        // Admin
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.index');
+        }
 
-    // Customer
-    if ($user->role === 'customer') {
-        return redirect()->route('home');
-    }
+        // Customer
+        if ($user->role === 'customer') {
+            return redirect()->route('home');
+        }
 
-    abort(403);
+        abort(403);
+    });
 });
 
 Route::get('/auth/login', [AuthController::class, 'showLoginForm'])->name('login');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Pages\Home;
 use App\Http\Controllers\SuperAdmin\SuperAdminBaseController;
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
@@ -59,12 +60,11 @@ class AdminHomeController extends SuperAdminBaseController
             });
         }
 
-        // filter role: kalau bukan superadmin, hanya event miliknya/organisasi
-        $query->when($user->role !== 'superadmin', function ($q) use ($user) {
-            //$q->where('user_id', $user->id);
-            // filter event milik organisasi
-            $q->where('organization_id', $user->organization_id);
-        });
+        /*// filter role: kalau bukan superadmin, hanya event milik organisasi yang dipilih
+        $query->when($user->role !== 'superadmin', function ($q) {
+            // The global scope `OrganizationScope` will handle filtering by selected_organization_id
+            // No explicit filter needed here as the global scope is applied to the Event model.
+        });*/
 
         // eksekusi query
         $events = $query->paginate(10)->appends($request->all());
@@ -122,7 +122,8 @@ class AdminHomeController extends SuperAdminBaseController
             }
         }
 
-        $organization = $user->organization ?? null;
+        // orgnization
+        $organization = Organization::where('id', session('selected_organization_id'))->first();
 
         return view('layouts.admin.index', array_merge($viewData, [
             'events' => $events,

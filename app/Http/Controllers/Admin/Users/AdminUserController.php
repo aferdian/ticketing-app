@@ -10,12 +10,11 @@ class AdminUserController extends SuperAdminBaseController
 {
     public function index()
     {
-        $user = Auth::user();
-        
         $viewData = $this->getViewData('users');
-        $organizationIds = $user->organizations->pluck('id');
-        $users = User::whereHas('organizations', function ($query) use ($organizationIds) {
-            $query->whereIn('organization_id', $organizationIds);
+        $selectedOrganizationId = session('selected_organization_id');
+
+        $users = User::whereHas('organizations', function ($query) use ($selectedOrganizationId) {
+            $query->where('organization_id', $selectedOrganizationId);
         })
         ->with('organizations')
         ->orderBy('created_at', 'desc')

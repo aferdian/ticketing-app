@@ -2,7 +2,7 @@
 
 namespace App\Actions\Events;
 
-use App\Models\{Event, Activity};
+use App\Models\{Event, Activity, Organization};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -48,7 +48,8 @@ class StoreEvent
         $data['user_id']    = Auth::id();
         $data['status']     = $data['status'] ?? 'draft';
 
-        if ($org = Auth::user()->organization) {
+        $org = Organization::where('id', session('selected_organization_id'))->first();
+        if ($org) {
             $data['organization_id'] = $org->id;
         }
 
