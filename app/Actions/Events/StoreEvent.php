@@ -48,8 +48,7 @@ class StoreEvent
         $data['user_id']    = Auth::id();
         $data['status']     = $data['status'] ?? 'draft';
 
-        $org = Organization::where('id', session('selected_organization_id'))->first();
-        if ($org) {
+        if ($org = Auth::user()->organization) {
             $data['organization_id'] = $org->id;
         }
 

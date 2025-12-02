@@ -60,6 +60,23 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Organization::class, 'user_organization');
     }
+
+    /**
+     * Get the currently selected organization for the user.
+     */
+    public function getCurrentOrganizationAttribute()
+    {
+        if (session()->has('selected_organization_id')) {
+            return $this->organizations()->where('id', session('selected_organization_id'))->first();
+        }
+
+        // If no organization is selected in the session, and the user has only one organization, return that one.
+        if ($this->organizations->count() === 1) {
+            return $this->organizations->first();
+        }
+
+        return null;
+    }
     
     public function events()
     {
@@ -74,5 +91,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function reports()
     {
         return $this->hasMany(Report::class);
+    }
+
+    /**
+     * Dynamically retrieve attributes on the model.
+     *
+     * @param  string  $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        if ($key === 'organization') {
+            return $this->current_organization;
+        }
+
+        return parent::__get($key);
     }
 }
