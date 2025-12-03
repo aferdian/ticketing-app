@@ -8,7 +8,7 @@
                 <i class="ri-dashboard-3-line text-2xl text-white"></i>
             </div>
             <span class="text-xl font-bold text-gray-800 dark:text-white hidden md:block">
-                @yield( 'navbar_title', Auth::user()->organization->name ?: env('APP_NAME') )
+                @yield( 'navbar_title', Auth::user()->organization?->name ?: env('APP_NAME') )
             </span>
         </a>
     </div>
@@ -108,11 +108,11 @@
                 <i class="ri-calendar-2-line"></i> 
                 <span class="text-sm font-medium text-gray-700 dark:text-gray-100">All Events</span>
             </a>
-            {{-- <a href="{{ route('orders.customers') }}"
+            <a href="{{ route('orders.customers') }}"
                 class="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
                 <i class="ri-shopping-bag-line text-gray-600 dark:text-gray-100"></i>
                 <span class="text-sm font-medium text-gray-700 dark:text-gray-100">My Orders</span>
-            </a> --}}
+            </a>
         @endif
 
         {{-- Kalau superadmin tampilkan notifikasi --}}
@@ -159,7 +159,7 @@
                     @endif
                 </div>
 
-                @if (Auth::user()->role !== 'superadmin' && Auth::user()->organizations->count() > 1)
+                @if (!in_array(Auth::user()->role, ['superadmin','customer']) && Auth::user()->organizations->count() > 1)
                     <div class="border-b border-gray-100 dark:border-gray-700 py-2">
                         <p class="px-4 py-2 text-xs text-gray-500 dark:text-gray-400">Switch Organization</p>
                         @foreach (Auth::user()->organizations as $organization)
@@ -178,22 +178,29 @@
                     </div>
                 @endif
 
-                @if (in_array(Auth::user()->role, ['customer', 'admin']))
-                    <a href="{{ route('orders.customers') }}"
-                        class="flex items-center gap-2 px-4 py-2 text-gray-900 dark:text-gray-100 hover:bg-gray-600 dark:hover:bg-gray-500/30 transition">
-                        <i class="ri-shopping-bag-line"></i> My Orders
-                    </a>
-                @endif
-
                 @if (in_array(Auth::user()->role, ['admin']))
                 <div class="border-b border-gray-100 dark:border-gray-700">
+                    <p class="px-4 py-2 text-xs text-gray-500 dark:text-gray-400">Manage Organization</p>
                     <a href="{{ route('admin.index') }}"
                         class="flex items-center gap-2 px-4 py-2 text-gray-900 dark:text-gray-100 hover:bg-gray-600 dark:hover:bg-gray-500/30 transition">
-                        <i class="ri-calendar-event-line"></i> My Events
+                        <i class="ri-calendar-event-line"></i> Events
                     </a>
                     <a href="{{ route('admin.users.index') }}"
                         class="flex items-center gap-2 px-4 py-2 text-gray-900 dark:text-gray-100 hover:bg-gray-600 dark:hover:bg-gray-500/30 transition">
                         <i class="ri-group-line"></i> Users
+                    </a>
+                </div>
+                @endif
+
+                @if (in_array(Auth::user()->role, ['admin','customer']))
+                <div class="border-b border-gray-100 dark:border-gray-700">
+                    <a href="{{ route('home') }}"
+                        class="flex md:hidden items-center gap-2 px-4 py-2 text-gray-900 dark:text-gray-100 hover:bg-gray-600 dark:hover:bg-gray-500/30 transition">
+                        <i class="ri-calendar-2-line"></i> All Events
+                    </a>
+                    <a href="{{ route('orders.customers') }}"
+                        class="flex md:hidden items-center gap-2 px-4 py-2 text-gray-900 dark:text-gray-100 hover:bg-gray-600 dark:hover:bg-gray-500/30 transition">
+                        <i class="ri-shopping-bag-line"></i> My Orders
                     </a>
                 </div>
                 @endif
