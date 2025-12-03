@@ -38,10 +38,10 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-5 text-gray-700 dark:text-gray-100">
-                                    @if ($org->user)
+                                    @if (count($org->users)>0)
                                         <div class="flex items-center gap-2">
                                             <i class="ri-user-line text-gray-400"></i>
-                                            <span>{{ $org->user->name }}</span>
+                                            <span>{{ $org->users[0]->name }}</span>
                                         </div>
                                     @else
                                         <span class="text-gray-400 italic">—</span>

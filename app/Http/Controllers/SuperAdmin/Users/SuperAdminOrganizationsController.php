@@ -11,9 +11,11 @@ class SuperAdminOrganizationsController extends SuperAdminBaseController
     {
         $viewData = $this->getViewData('organizations');
 
-        $organizations = Organization::with('user')
-            ->latest()
-            ->paginate(10);
+        $organizations = Organization::with(['users' => function($q) {
+            $q->wherePivot('organization_role', 'owner');
+        }])
+        ->latest()
+        ->paginate(10);
 
         return view('layouts.superAdmin.index', array_merge($viewData, [
             'organizations' => $organizations,
