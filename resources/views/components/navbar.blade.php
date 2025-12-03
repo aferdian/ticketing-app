@@ -178,7 +178,7 @@
                     </div>
                 @endif
 
-                @if (in_array(Auth::user()->role, ['customer', 'admin', 'superadmin']))
+                @if (in_array(Auth::user()->role, ['customer', 'admin']))
                     <a href="{{ route('orders.customers') }}"
                         class="flex items-center gap-2 px-4 py-2 text-gray-900 dark:text-gray-100 hover:bg-gray-600 dark:hover:bg-gray-500/30 transition">
                         <i class="ri-shopping-bag-line"></i> My Orders
