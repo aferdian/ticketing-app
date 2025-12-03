@@ -17,13 +17,20 @@ class CheckForSelectedOrganization
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && !session()->has('selected_organization_id')) {
-            $userOrganizations = Auth::user()->organizations;
+        if (Auth::check()) {
+            // Bypass for superadmin users
+            if (Auth::user()->role === 'superadmin') {
+                return $next($request);
+            }
 
-            if ($userOrganizations->count() > 1) {
-                return redirect()->route('organization.select');
-            } elseif ($userOrganizations->count() === 1) {
-                session()->put('selected_organization_id', $userOrganizations->first()->id);
+            if (!session()->has('selected_organization_id')) {
+                $userOrganizations = Auth::user()->organizations;
+
+                if ($userOrganizations->count() > 1) {
+                    return redirect()->route('organization.select');
+                } elseif ($userOrganizations->count() === 1) {
+                    session()->put('selected_organization_id', $userOrganizations->first()->id);
+                }
             }
         }
 

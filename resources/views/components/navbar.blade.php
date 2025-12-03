@@ -152,14 +152,14 @@
                 <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ Auth::user()->name }}</p>
                     <p class="text-xs text-gray-500 truncate dark:text-gray-400">{{ Auth::user()->email }}</p>
-                    @if (Auth::user()->organizations->count() > 0 && session()->has('selected_organization_id'))
+                    @if (Auth::user()->role !== 'superadmin' && Auth::user()->organizations->count() > 0 && session()->has('selected_organization_id'))
                         <p class="text-xs text-gray-500 truncate dark:text-gray-400">
                             {{ Auth::user()->organizations->where('id', session('selected_organization_id'))->first()->name ?? 'N/A' }}
                         </p>
                     @endif
                 </div>
 
-                @if (Auth::user()->organizations->count() > 1)
+                @if (Auth::user()->role !== 'superadmin' && Auth::user()->organizations->count() > 1)
                     <div class="border-b border-gray-100 dark:border-gray-700 py-2">
                         <p class="px-4 py-2 text-xs text-gray-500 dark:text-gray-400">Switch Organization</p>
                         @foreach (Auth::user()->organizations as $organization)
