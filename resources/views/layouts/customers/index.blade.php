@@ -1,4 +1,7 @@
 @extends('layouts.app')
+
+@section('navbar_title', env('APP_NAME'))
+
 @section('content')
     <div class="min-h-screen relative z-10 overflow-hidden">
         <!-- Animated background elements -->
