@@ -17,7 +17,7 @@ class CustomersHomeController extends Controller
         $users = Auth::user();
         $search = request('search');
 
-        $events = Event::with([
+        $events = Event::withoutGlobalScope(\App\Models\Scopes\OrganizationScope::class)->with([
             'products' => function ($query) {
                 $query->where('sale_start_date', '<=', now())
                     ->where('sale_end_date', '>=', now());
@@ -36,7 +36,7 @@ class CustomersHomeController extends Controller
 
     public function eventShow($slugOrId)
     {
-        $event = Event::with([
+        $event = Event::withoutGlobalScope(\App\Models\Scopes\OrganizationScope::class)->with([
             'products' => function ($query) {
                 $query->where('sale_start_date', '<=', now())
                     ->where('sale_end_date', '>=', now());
