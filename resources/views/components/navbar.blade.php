@@ -8,7 +8,7 @@
                 <i class="ri-dashboard-3-line text-2xl text-white"></i>
             </div>
             <span class="text-xl font-bold text-gray-800 dark:text-white hidden md:block">
-                {{ env('APP_NAME') }}
+                @yield( 'navbar_title', Auth::user()->organization->name ?: env('APP_NAME') )
             </span>
         </a>
     </div>
