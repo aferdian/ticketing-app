@@ -1,4 +1,4 @@
-@if (count(auth()->user()->organizations) == 0)
+@if (auth()->user()->role != 'superadmin' && count(auth()->user()->organizations) == 0)
     <div id="organizationModal" class="fixed inset-0 z-50 flex items-center justify-center">
     @else
         <div id="organizationModal" class="fixed inset-0 z-50 hidden items-center justify-center">
