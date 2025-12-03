@@ -15,13 +15,16 @@ class AdminUserController extends SuperAdminBaseController
 
         $usersQuery = User::query();
 
-        // If the user is not a superadmin, filter by the selected organization
-        if ($user->role !== 'superadmin') {
-            $selectedOrganizationId = session('selected_organization_id');
-            $usersQuery->join('user_organization', 'users.id', '=', 'user_organization.user_id')
-                ->where('user_organization.organization_id', $selectedOrganizationId)
-                ->select('users.*', 'user_organization.organization_role', 'user_organization.created_at as joined_at'); // Select all user columns, pivot role, and pivot created_at as joined_at
+        // If the user is superadmin, redirect to superadmin user page
+        if ($user->role == 'superadmin') {
+            return redirect()->route('superAdmin.users');
         }
+
+        // filter by the selected organization
+        $selectedOrganizationId = session('selected_organization_id');
+        $usersQuery->join('user_organization', 'users.id', '=', 'user_organization.user_id')
+            ->where('user_organization.organization_id', $selectedOrganizationId)
+            ->select('users.*', 'user_organization.organization_role', 'user_organization.created_at as joined_at'); // Select all user columns, pivot role, and pivot created_at as joined_at
 
         $users = $usersQuery->with(['organizations' => function ($query) {
             $query->where('id', session('selected_organization_id'))->withPivot('organization_role');
