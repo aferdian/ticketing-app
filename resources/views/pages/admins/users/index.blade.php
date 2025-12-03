@@ -56,24 +56,25 @@
                                 <td class="px-6 py-5 text-gray-700 dark:text-gray-100">{{ $user->email }}</td>
                                 <td class="px-6 py-5">
                                     @php
+                                        $organizationRole = $user->organizations->first()->pivot->organization_role ?? 'N/A';
                                         $roleColors = [
-                                            'superadmin' =>
-                                                'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200',
+                                            'owner' => 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200',
                                             'admin' => 'bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200',
-                                            'customer' =>
-                                                'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200',
+                                            'product_manager' => 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200',
+                                            'order_manager' => 'bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200',
+                                            'checkin_staff' => 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200',
                                         ];
                                         $color =
-                                            $roleColors[$user->role] ??
+                                            $roleColors[$organizationRole] ??
                                             'bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-200';
                                     @endphp
                                     <span
                                         class="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full {{ $color }}">
-                                        {{ ucfirst($user->role) }}
+                                        {{ ucwords(str_replace('_', ' ', $organizationRole)) }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-5 text-sm text-gray-500 dark:text-gray-100">
-                                    {{ $user->created_at->format('d M Y') }}
+                                    {{ \Carbon\Carbon::parse($user->joined_at)->format('d M Y') }}
                                 </td>
                                 <td class="px-6 py-5 text-right">
                                     <div class="flex justify-end gap-2">
@@ -119,25 +120,28 @@
                             </div>
                         </div>
                         @php
+                            $organizationRole = $user->organizations->first()->pivot->organization_role ?? 'N/A';
                             $roleColors = [
-                                'superadmin' => 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200',
+                                'owner' => 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200',
                                 'admin' => 'bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200',
-                                'customer' => 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200',
+                                'product_manager' => 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200',
+                                'order_manager' => 'bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200',
+                                'checkin_staff' => 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200',
                             ];
                             $color =
-                                $roleColors[$user->role] ??
+                                $roleColors[$organizationRole] ??
                                 'bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-200';
                         @endphp
                         <span
                             class="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full {{ $color }}">
-                            {{ ucfirst($user->role) }}
+                            {{ ucfirst(str_replace('_', ' ', $organizationRole)) }}
                         </span>
                     </div>
 
                     <!-- Details -->
                     <div class="text-sm text-gray-700 dark:text-gray-100 space-y-2">
                         <p><span class="font-semibold text-gray-600 dark:text-gray-400">Joined:</span>
-                            {{ $user->created_at->format('d M Y, H:i') }}</p>
+                            {{ \Carbon\Carbon::parse($user->joined_at)->format('d M Y, H:i') }}</p>
                     </div>
 
                     <!-- Actions -->

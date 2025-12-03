@@ -18,13 +18,16 @@ class AdminUserController extends SuperAdminBaseController
         // If the user is not a superadmin, filter by the selected organization
         if ($user->role !== 'superadmin') {
             $selectedOrganizationId = session('selected_organization_id');
-            $usersQuery->whereHas('organizations', function ($query) use ($selectedOrganizationId) {
-                $query->where('organization_id', $selectedOrganizationId);
-            });
+            $usersQuery->join('user_organization', 'users.id', '=', 'user_organization.user_id')
+                ->where('user_organization.organization_id', $selectedOrganizationId)
+                ->select('users.*', 'user_organization.organization_role', 'user_organization.created_at as joined_at'); // Select all user columns, pivot role, and pivot created_at as joined_at
         }
 
-        $users = $usersQuery->with('organizations')
-            ->orderBy('created_at', 'desc')
+        $users = $usersQuery->with(['organizations' => function ($query) {
+            $query->where('id', session('selected_organization_id'))->withPivot('organization_role');
+        }])
+            ->orderByRaw("FIELD(user_organization.organization_role, 'owner', 'admin', 'product_manager', 'order_manager', 'checkin_staff')")
+            ->orderBy('users.created_at', 'desc') // Specify table for created_at
             ->paginate(10);
 
         return view('layouts.admin.users', array_merge($viewData, [
