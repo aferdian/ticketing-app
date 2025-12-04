@@ -1,15 +1,19 @@
+@extends('layouts.app')
+
 @section('title', 'Organization Users')
 
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 sm:p-6 lg:p-8">
-    <div class="max-w-7xl mx-auto space-y-6"> <!-- Header -->
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 sm:mb-12 gap-4">
-            <div class="flex flex-col gap-2">
-                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">
-                    Users
-                </h1>
-                <p class="text-gray-600 dark:text-gray-400 max-w-2xl">
-                    Manage organization users
-                </p>
+@section('content')
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 animate-[slideUp_0.8s_ease-out_forwards]">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Pengaturan User</h1>
+
+            <!-- Create Button -->
+            <div class="relative"><!-- id="openEventModal" -->
+                <button 
+                    class="inline-flex items-center gap-2 text-white bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-xl text-sm px-5 py-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <i class="ri-add-line text-lg"></i>
+                    <span>Tambah</span>
+                </button>
             </div>
         </div>
 
@@ -164,6 +168,7 @@
             {{ $users->links() }}
         </div>
     </div>
-</div>
 
 @include('modals.users.updateUsers')
+
+@endsection
